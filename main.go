@@ -7,7 +7,7 @@ import (
 	"github.com/EnesAybeyR/crm-golang-fiber.git/lead"
 	"github.com/gofiber/fiber"
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
 func setupRoutes(app *fiber.App) {
@@ -19,7 +19,8 @@ func setupRoutes(app *fiber.App) {
 
 func initDatabase() {
 	var err error
-	database.DBConn, err = gorm.Open("sqlite3", "leads.db")
+	dsn := "root:@tcp(127.0.0.1:3306)/crm_db?charset=utf8&parseTime=True&loc=Local"
+	database.DBConn, err = gorm.Open("mysql", dsn)
 	if err != nil {
 		panic("failed to connect database" + err.Error())
 	}
